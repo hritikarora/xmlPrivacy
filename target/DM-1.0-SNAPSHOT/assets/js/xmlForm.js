@@ -36,7 +36,7 @@ login_form.addEventListener('submit', async (e) => {
         count++;
         document.getElementById("xml-form2").appendChild(para);
 
-        let values = ["no masking","masking", "swapping", "pseudonomyzation"];
+        let values = ["no masking","masking", "swapping", "pseudonymisation"];
 
         let select = document.createElement("select");
         select.id = count.toString();
@@ -83,8 +83,9 @@ form2.addEventListener('submit',async (e) => {
         }).then(
             response => {
                 if (response['status'] === 203) {
-
+                    window.alert("Specification file downloaded!")
                 } else {
+                    window.alert("An Error occurred! Please try again!")
                 }
             }
         );

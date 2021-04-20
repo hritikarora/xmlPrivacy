@@ -71,7 +71,8 @@ public class XmldataController {
         }
         List<String> allElements = new ArrayList<String>(uniqueElements.keySet());
 
-           return Response.ok().entity(allElements).build();
+        System.out.println(allElements);
+        return Response.ok().entity(allElements).build();
     }
 
     @POST
@@ -95,23 +96,25 @@ public class XmldataController {
                 System.out.println(key);
                 System.out.println(obj.get(key));
 
-                Element elem = document.createElement("specs");
+                Element elem = document.createElement("datasource");
                 root.appendChild(elem);
 
                 // xpath element
                 Element xpath = document.createElement("xpath");
-                xpath.appendChild(document.createTextNode("/input/"+key));
+                xpath.appendChild(document.createTextNode(key));
                 elem.appendChild(xpath);
 
                 // technique element
-                Element mask = document.createElement("technique");
-                mask.appendChild(document.createTextNode(obj.get(key).toString()));
+                String s = obj.get(key).toString();
+                s=s.substring(1,s.length()-1);
+                Element mask = document.createElement("FilterType");
+                mask.appendChild(document.createTextNode(s));
                 elem.appendChild(mask);
         }
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource domSource = new DOMSource(document);
-            StreamResult streamResult = new StreamResult(new File("down.xml"));
+            StreamResult streamResult = new StreamResult(new File("spec.xml"));
 
             transformer.transform(domSource, streamResult);
 
@@ -124,6 +127,6 @@ public class XmldataController {
             tfe.printStackTrace();
         }
 
-        return Response.ok().build();
+        return Response.ok(203).build();
     }
 }
