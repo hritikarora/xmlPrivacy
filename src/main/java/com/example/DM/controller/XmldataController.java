@@ -23,6 +23,7 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.net.URISyntaxException;
 import java.util.*;
 
@@ -38,6 +39,7 @@ public class XmldataController {
 
         String xml_data = String.valueOf(data.get("xml_txt"));
         System.out.println(xml_data);
+        xml_data = xml_data.substring(1,xml_data.length()-1);
         HashMap<String, Boolean> uniqueElements = new HashMap<String, Boolean>();
         xml_data = xml_data.replaceAll("\\\\n", "");
         xml_data = xml_data.replaceAll("\\\\", "");
@@ -54,16 +56,15 @@ public class XmldataController {
             e.printStackTrace();
         }
         try {
-//          //InputSource is = new InputSource(new StringReader(xml_data));
-//            try(PrintWriter out = new PrintWriter("input.txt")) {
-//                out.println(xml_data);
-//        }
+          //InputSource is = new InputSource(new StringReader(xml_data));
+            try(PrintWriter out = new PrintWriter("input.txt")) {
+                out.println(xml_data);
+        }
             final Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse("/home/hritik/apache-tomcat-9.0.41/bin/input.txt");
             final XPathExpression xpath = XPathFactory.newInstance().newXPath().compile("//*[count(./*) = 0]");
             final NodeList nodeList = (NodeList) xpath.evaluate(doc, XPathConstants.NODESET);
             for(int i = 0; i < nodeList.getLength(); i++) {
                 final Element el = (Element) nodeList.item(i);
-//              System.out.println(el.getNodeName());
                 uniqueElements.put(el.getNodeName(), true);
             }
         } catch (Exception e) {

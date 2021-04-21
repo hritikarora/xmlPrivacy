@@ -1,3 +1,30 @@
+document.getElementById('input-file').addEventListener('change', getFile)
+
+function getFile(event) {
+    const input = event.target
+    if ('files' in input && input.files.length > 0) {
+        placeFileContent(
+            document.getElementById('content-target'),
+            input.files[0])
+    }
+}
+
+function placeFileContent(target, file) {
+    readFileContent(file).then(content => {
+        target.value = content
+    }).catch(error => console.log(error))
+}
+
+function readFileContent(file) {
+    const reader = new FileReader()
+    return new Promise((resolve, reject) => {
+        reader.onload = event => resolve(event.target.result)
+        reader.onerror = error => reject(error)
+        reader.readAsText(file)
+    })
+}
+
+
 let login_form = document.getElementById('xml-form');
 
 login_form.addEventListener('submit', async (e) => {
@@ -7,7 +34,7 @@ login_form.addEventListener('submit', async (e) => {
     document.getElementById("xml-form").style.whiteSpace = "nowrap";
 
     //Input from user
-    let txt=document.getElementById('xml-text').value;
+    let txt=document.getElementById('content-target').value;
     console.log(txt);
 
     //send xml file to backend
