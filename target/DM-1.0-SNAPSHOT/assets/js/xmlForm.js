@@ -63,7 +63,7 @@ login_form.addEventListener('submit', async (e) => {
         count++;
         document.getElementById("xml-form2").appendChild(para);
 
-        let values = ["no masking","masking", "swapping", "pseudonymisation"];
+        let values = ["no masking","masking", "swapping", "rsa"];
 
         let select = document.createElement("select");
         select.id = count.toString();

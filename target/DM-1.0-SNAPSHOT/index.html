@@ -10,6 +10,19 @@
         textarea {
             width: 400px;
             height: 400px;
+            border-radius:10px ;
+        }
+        input{
+            border-radius: 10px;
+        }
+        p{
+            font-family: "Arial Black";
+            font-style: italic;
+        }
+        select{
+            position: relative;
+            right: 0;
+            border-radius: 4px;
         }
     </style>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -26,23 +39,23 @@
 
     <div class="row">
 
-        <div class="col-sm-4">
+        <div class="col-sm-6" style="display: flex;flex-direction: column;justify-content: center">
             <h2>Upload your xml file here :</h2>
             <div class="form-group">
-                <form id="xml-form" action="" method="post">
+                <form id="xml-form" action="" method="post" >
                     <label for="input-file">Specify a file:</label><br>
-                    <input style="padding: 3px" type="file" id="input-file">
+                    <input style="padding: 3px" value="Browse" type="file" id="input-file">
                     <textarea id="content-target"></textarea>
                     <input class="btn btn-primary" type="submit" value="submit" />
                 </form>
             </div>
         </div>
 
-        <div class="col-sm-4">
+        <div class="col-sm-6" style="display: flex;flex-direction: column;justify-content: center">
             <h2>Get specification file for your upload</h2>
-            <form id="xml-form2" action="" method="post">
-                Select masking !
-                <input class="btn btn-primary" type="submit" value="submit"/>
+            <form id="xml-form2" action="" method="post" >
+                <h3>Select masking :</h3>
+                <input class="btn btn-primary" type="submit" value="submit" style="bottom: 0"/>
             </form>
         </div>
 
@@ -50,14 +63,13 @@
 </div>
 <div class="container">
 <div class="row">
-    <div class="col-sm-4">
-        <h2>Upload your xml file here :</h2>
+    <div class="col-sm-8" style="display: flex;flex-direction: row;justify-content: center">
         <div class="form-group">
             <form id="xml-form3" action="" method="post">
                 <h2>Privacy enabled file :</h2>
 
                 <textarea id="content-target2"></textarea>
-                <input class="btn btn-primary" type="submit" value="submit" />
+<!--                <input class="btn btn-primary" type="submit" value="submit" />-->
             </form>
         </div>
     </div>

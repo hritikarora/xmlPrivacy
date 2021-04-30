@@ -59,7 +59,11 @@ public class XmldataController {
           //InputSource is = new InputSource(new StringReader(xml_data));
             try(PrintWriter out = new PrintWriter("input.txt")) {
                 out.println(xml_data);
-        }
+            }
+            File myObj = new File("/home/hritik/apache-tomcat-9.0.41/bin/input.xml");
+            try(PrintWriter out2 = new PrintWriter("input.xml")) {
+                out2.println(xml_data);
+            }
             final Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse("/home/hritik/apache-tomcat-9.0.41/bin/input.txt");
             final XPathExpression xpath = XPathFactory.newInstance().newXPath().compile("//*[count(./*) = 0]");
             final NodeList nodeList = (NodeList) xpath.evaluate(doc, XPathConstants.NODESET);
@@ -144,7 +148,6 @@ public class XmldataController {
             out.append(s);
         }
         System.out.println(out);
-//        return Response.ok(out).status(203).build();
         return out.toString();
     }
 }
