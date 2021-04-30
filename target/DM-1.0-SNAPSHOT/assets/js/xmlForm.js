@@ -109,11 +109,15 @@ form2.addEventListener('submit',async (e) => {
             })
         }).then(
             response => {
-                if (response['status'] === 203) {
-                    window.alert("Specification file downloaded!")
-                } else {
-                    window.alert("An Error occurred! Please try again!")
-                }
+                response.text().then((str)=>
+                    document.getElementById("content-target2").innerText = str
+                );
+
+                // if (response['status'] === 203) {
+                //     window.alert("Specification file downloaded!")
+                // } else {
+                //     window.alert("An Error occurred! Please try again!")
+                // }
             }
         );
     }

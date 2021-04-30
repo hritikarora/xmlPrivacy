@@ -3,6 +3,8 @@ package com.example.DM.controller;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+
+import javax.json.Json;
 import javax.json.JsonObject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -21,9 +23,7 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.URISyntaxException;
 import java.util.*;
 
@@ -80,10 +80,12 @@ public class XmldataController {
     @Path("/createspec")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createSpec(JsonObject data) throws URISyntaxException {
+    public String createSpec(JsonObject data) throws URISyntaxException, IOException {
         System.out.println("creating spec file");
 
         JsonObject obj = (JsonObject) data.get("specs");
+
+        StreamResult doc = null;
         try {
             DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
@@ -119,7 +121,9 @@ public class XmldataController {
 
             transformer.transform(domSource, streamResult);
 
+
             System.out.println("Done creating XML File");
+            
 
         } catch (ParserConfigurationException pce) {
             pce.printStackTrace();
@@ -128,6 +132,19 @@ public class XmldataController {
             tfe.printStackTrace();
         }
 
-        return Response.ok(203).build();
+        String pathPython = "/home/hritik/apache-tomcat-9.0.41/bin/xp.py";
+        String cmd = "python3 "+pathPython+" -x input.xml -s spec.xml " ;
+
+        Runtime r = Runtime.getRuntime();
+        Process p = r.exec(cmd);
+        BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
+        String s;
+        StringBuilder out = new StringBuilder();
+        while((s = in.readLine()) != null){
+            out.append(s);
+        }
+        System.out.println(out);
+//        return Response.ok(out).status(203).build();
+        return out.toString();
     }
 }
